@@ -11,4 +11,8 @@ class CheckListItem {
     
     var text = ""
     var isChecked  = false
+    
+    func toogle() {
+        isChecked = !isChecked
+    }
 }

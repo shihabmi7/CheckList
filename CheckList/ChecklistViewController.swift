@@ -12,6 +12,29 @@ class ChecklistViewController: UITableViewController {
 
     var checklist: [CheckListItem]
     
+    var titles = [ "Medicine", "Baby Shampoo", "Meeting with friends", "Go to Shop"]
+    
+    @IBAction func addItem(_ sender: Any) {
+        
+        let position = checklist.count
+        let item = CheckListItem()
+        
+        let text_ = titles[Int(getRandomNumber())]
+        item.text = text_
+        item.isChecked = true
+        checklist.append(item)
+
+        // we have only one section
+        var indexPath = IndexPath(row: position, section: 0)
+        var indexpaths = [indexPath]
+        tableView.insertRows(at: indexpaths, with: .automatic)
+        
+    }
+    
+    func getRandomNumber() -> UInt32 {
+        var value =  arc4random_uniform(UInt32(titles.count))
+        return value
+    }
     required init?(coder aDecoder: NSCoder) {
         
         checklist = [CheckListItem]()
@@ -29,14 +52,14 @@ class ChecklistViewController: UITableViewController {
         
         
         let itemThree = CheckListItem()
-        itemTwo.text = "Hello Mew..."
-        itemTwo.isChecked = false
+        itemThree.text = "Hello Mew..."
+        itemThree.isChecked = false
         checklist.append(itemThree)
         
         
         let itemFour = CheckListItem()
-        itemTwo.text = "Hello Mew..."
-        itemTwo.isChecked = false
+        itemFour.text = "Hello Mew..."
+        itemFour.isChecked = false
         checklist.append(itemFour)
         
         super.init(coder: aDecoder)
@@ -45,6 +68,8 @@ class ChecklistViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        
+        navigationController?.navigationBar.prefersLargeTitles = true
     }
 
     override func didReceiveMemoryWarning() {
@@ -52,6 +77,12 @@ class ChecklistViewController: UITableViewController {
         // Dispose of any resources that can be recreated.
     }
 
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        
+        checklist.remove(at: indexPath.row)
+        tableView.reloadData()
+        
+    }
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return checklist.count
     }
@@ -61,7 +92,7 @@ class ChecklistViewController: UITableViewController {
        if let cell = tableView.cellForRow(at: indexPath){
         
         let item = checklist[indexPath.row]
-        item.isChecked = !item.isChecked
+        item.toogle()
     
         configureCheckMark(for: cell, with: item)
         
@@ -73,17 +104,24 @@ class ChecklistViewController: UITableViewController {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "ChecklistItem", for: indexPath)
         
-        let label = cell.viewWithTag(1000) as! UILabel
-
+    
         let item = checklist[indexPath.row]
-        label.text = item.text
         
+        configureText(for: cell, with: item)
         configureCheckMark(for: cell, with : item)
         
         return cell
         
     }
     
+    
+    func configureText(for cell: UITableViewCell, with item: CheckListItem){
+
+        let label = cell.viewWithTag(1000) as! UILabel
+        label.text = item.text
+        
+    }
+
     func configureCheckMark(for cell: UITableViewCell, with item: CheckListItem) {
         
         if item.isChecked{
