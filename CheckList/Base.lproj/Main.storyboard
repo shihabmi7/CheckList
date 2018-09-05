@@ -33,6 +33,10 @@
                                                     <nil key="textColor"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                                     <textInputTraits key="textInputTraits" autocapitalizationType="sentences" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
+                                                    <connections>
+                                                        <action selector="Done" destination="1De-VT-kW3" eventType="editingDidEndOnExit" id="I9h-YF-BPT"/>
+                                                        <outlet property="delegate" destination="1De-VT-kW3" id="u2m-xd-9Qw"/>
+                                                    </connections>
                                                 </textField>
                                             </subviews>
                                         </tableViewCellContentView>
@@ -60,6 +64,8 @@
                     </navigationItem>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
+                        <outlet property="backBarButton" destination="2sC-wX-fLP" id="mtY-zW-bwm"/>
+                        <outlet property="doneBarButton" destination="PxX-3f-GB5" id="8d0-ce-Sky"/>
                         <outlet property="textField" destination="CF0-tY-Wwz" id="7QD-vd-fwi"/>
                     </connections>
                 </tableViewController>
