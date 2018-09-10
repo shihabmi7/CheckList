@@ -8,18 +8,27 @@
 
 import UIKit
 
+
+protocol AddItemViewControllerProtocol : class {
+    
+    func addItemViewControllerDidCancel(_ controller: UIViewController)
+    func addItemViewController(_ controller: UIViewController, item: CheckListItem)
+    
+}
 class AddItemViewController: UITableViewController,UITextFieldDelegate {
 
    @IBOutlet weak var textField: UITextField!
     
     @IBOutlet weak var doneBarButton: UIBarButtonItem!
     @IBOutlet weak var backBarButton: UIBarButtonItem!
+    
+    weak var delegateAddItem: AddItemViewControllerProtocol?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         navigationItem.largeTitleDisplayMode = .never
     }
-    
 
     override func viewWillAppear(_ animated: Bool) {
         textField.becomeFirstResponder()
@@ -28,13 +37,18 @@ class AddItemViewController: UITableViewController,UITextFieldDelegate {
     @IBAction func cancel(){
         
         navigationController?.popViewController(animated: true)
-
+        delegateAddItem?.addItemViewControllerDidCancel(self)
     }
     
     @IBAction func Done(){
         
- navigationController?.popViewController(animated: true)
-        
+       // navigationController?.popViewController(animated: true)
+       //  print("Content of the textfield , \(textField.text) ")
+        let itemChecklist = CheckListItem()
+        itemChecklist.text = textField.text!
+        itemChecklist.isChecked = false
+         
+        delegateAddItem?.addItemViewController(self, item: itemChecklist)
     }
     
     override func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {

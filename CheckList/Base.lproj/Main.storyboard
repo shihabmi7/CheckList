@@ -108,7 +108,7 @@
                     <navigationItem key="navigationItem" title="Check List" id="Mu0-nW-uje">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="RYL-ch-dcL">
                             <connections>
-                                <segue destination="1De-VT-kW3" kind="show" id="iAD-JQ-FSs"/>
+                                <segue destination="1De-VT-kW3" kind="show" identifier="AddItem" id="iAD-JQ-FSs"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
