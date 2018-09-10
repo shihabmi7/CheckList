@@ -17,17 +17,26 @@ protocol AddItemViewControllerProtocol : class {
 }
 class AddItemViewController: UITableViewController,UITextFieldDelegate {
 
-   @IBOutlet weak var textField: UITextField!
-    
+    @IBOutlet weak var textField: UITextField!
     @IBOutlet weak var doneBarButton: UIBarButtonItem!
     @IBOutlet weak var backBarButton: UIBarButtonItem!
     
     weak var delegateAddItem: AddItemViewControllerProtocol?
     
+    var editCheckListItem: CheckListItem?
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         navigationItem.largeTitleDisplayMode = .never
+        
+        if let item = editCheckListItem {
+            title = "Edit Item"
+            textField.text = item.text
+            doneBarButton.isEnabled = true
+        }
+        
+        
     }
 
     override func viewWillAppear(_ animated: Bool) {

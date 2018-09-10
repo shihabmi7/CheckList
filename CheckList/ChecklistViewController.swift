@@ -144,10 +144,14 @@ class ChecklistViewController: UITableViewController , AddItemViewControllerProt
 
     func configureCheckMark(for cell: UITableViewCell, with item: CheckListItem) {
         
+        let label = cell.viewWithTag(1001) as! UILabel
+        
         if item.isChecked{
-            cell.accessoryType = .checkmark
+            //cell.accessoryType = .checkmark
+            label.text   = "√"
         }else{
-            cell.accessoryType = .none
+            // cell.accessoryType = .none
+            label.text   = ""
         }
         
     }
@@ -155,9 +159,19 @@ class ChecklistViewController: UITableViewController , AddItemViewControllerProt
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
         if segue.identifier == "AddItem" {
-            let content = segue.destination as! AddItemViewController
+            let controller = segue.destination as! AddItemViewController
             
-            content.delegateAddItem = self
+            controller.delegateAddItem = self
+        } else if segue.identifier == "EditItem" {
+            
+            let controller = segue.destination as! AddItemViewController
+            
+            controller.delegateAddItem = self
+            
+            if let index = tableView.indexPath(for: sender as! UITableViewCell){
+                
+                controller.editCheckListItem = checklist[index.row]
+            }
             
         }
         
