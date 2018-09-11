@@ -14,6 +14,8 @@ protocol AddItemViewControllerProtocol : class {
     func addItemViewControllerDidCancel(_ controller: UIViewController)
     func addItemViewController(_ controller: UIViewController, item: CheckListItem)
     
+    func addItemViewController(_ controller: UIViewController, edditItem: CheckListItem)
+    
 }
 class AddItemViewController: UITableViewController,UITextFieldDelegate {
 
@@ -35,8 +37,6 @@ class AddItemViewController: UITableViewController,UITextFieldDelegate {
             textField.text = item.text
             doneBarButton.isEnabled = true
         }
-        
-        
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -44,7 +44,6 @@ class AddItemViewController: UITableViewController,UITextFieldDelegate {
     }
     
     @IBAction func cancel(){
-        
         navigationController?.popViewController(animated: true)
         delegateAddItem?.addItemViewControllerDidCancel(self)
     }
@@ -53,11 +52,22 @@ class AddItemViewController: UITableViewController,UITextFieldDelegate {
         
        // navigationController?.popViewController(animated: true)
        //  print("Content of the textfield , \(textField.text) ")
-        let itemChecklist = CheckListItem()
-        itemChecklist.text = textField.text!
-        itemChecklist.isChecked = false
-         
-        delegateAddItem?.addItemViewController(self, item: itemChecklist)
+        
+        if let editCheckListItem = editCheckListItem {
+        
+            editCheckListItem.text = textField.text!
+            
+            delegateAddItem?.addItemViewController(self, edditItem: editCheckListItem )
+            
+        } else {
+            
+            let itemChecklist = CheckListItem()
+            itemChecklist.text = textField.text!
+            itemChecklist.isChecked = false
+            
+            delegateAddItem?.addItemViewController(self, item: itemChecklist)
+        }
+        
     }
     
     override func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {

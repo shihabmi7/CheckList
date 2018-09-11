@@ -14,6 +14,18 @@ class ChecklistViewController: UITableViewController , AddItemViewControllerProt
         navigationController?.popViewController(animated: true)
     }
     
+    func addItemViewController(_ controller: UIViewController, edditItem: CheckListItem) {
+        
+        if let postion = checklist.index(of: edditItem) {
+            let indexPath = IndexPath(row: postion, section: 0)
+            
+           let cell =  tableView.cellForRow(at: indexPath)!
+            configureText(for: cell, with: edditItem)
+        
+        }
+        navigationController?.popViewController(animated: true)
+    }
+    
     func addItemViewController(_ controller: UIViewController, item: CheckListItem) {
         
         navigationController?.popViewController(animated: true)
